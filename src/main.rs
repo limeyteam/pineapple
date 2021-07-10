@@ -1,41 +1,70 @@
 #![no_std]
 #![no_main]
 #![feature(custom_test_frameworks)]
-#![test_runner(crate::test_runner)]
+#![test_runner(spinix::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
+use bootloader::BootInfo;
+use bootloader::entry_point;
+use spinix::println;
 use core::panic::PanicInfo;
 
-mod vga_buffer;
+entry_point!(kernel_main);
 
-#[no_mangle]
-pub extern "C" fn _start() -> ! {
-    println!("Hello World{}", "!");
+fn kernel_main(boot_info: &'static BootInfo) -> ! {
+    use spinix::memory::active_level_4_table;
+    use x86_64::VirtAddr;
 
+    use spinix::memory::translate_addr;
+
+    spinix::init();
+
+ let phys_mem_offset = VirtAddr::new(boot_info.physical_memory_offset);
+    /*
+    let addresses = [
+        // the identity-mapped vga buffer page
+        0xb8000,
+        // some code page
+        0x201008,
+        // some stack page
+        0x0100_0020_1a10,
+        // virtual address mapped to physical address 0
+        boot_info.physical_memory_offset,
+    ];
+
+    for &address in &addresses {
+        let virt = VirtAddr::new(address);
+        let phys = unsafe { translate_addr(virt, phys_mem_offset) };
+        println!("{:?} -> {:?}", virt, phys);
+    }
+    */
+
+    spinix::collectionTask();
+
+    // Test here
     #[cfg(test)]
     test_main();
 
-    loop {}
+    spinix::hlt_loop();
 }
 
+
 /// This function is called on panic.
+#[cfg(not(test))]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
-    loop {}
+    spinix::hlt_loop();
 }
 
 #[cfg(test)]
-fn test_runner(tests: &[&dyn Fn()]) {
-    println!("Running {} tests", tests.len());
-    for test in tests {
-        test();
-    }
+#[panic_handler]
+fn panic(info: &PanicInfo) -> ! {
+    spinix::test_panic_handler(info);
+    spinix::hlt_loop();
 }
 
 #[test_case]
 fn trivial_assertion() {
-    print!("trivial assertion... ");
     assert_eq!(1, 1);
-    println!("[ok]");
 }
