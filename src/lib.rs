@@ -22,7 +22,7 @@ pub fn init() {
     interrupts::init_idt();
     unsafe { interrupts::PICS.lock().initialize() };
     x86_64::instructions::interrupts::enable();
-    let version = "0.1.1";
+    let version = "0.1.2";
     println!("Spinix Kernel, Version: {0} \n", version);
     println!("GDT [OK]");
     println!("Interrupts [OK]");
