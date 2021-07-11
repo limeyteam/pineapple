@@ -1,18 +1,9 @@
 [package]
-name = "spinix"
+name = "boot"
 version = "0.1.0"
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bootloader = "0.10.1"
-
-[profile.dev]
-panic = "abort"
-
-[profile.release]
-panic = "abort"
-
-[workspace]
-members = ["boot"]
+bootloader-locator = "0.0.4"
