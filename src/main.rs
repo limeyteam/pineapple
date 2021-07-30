@@ -1,24 +1,22 @@
 #![no_std]
 #![no_main]
+#[macro_use]
 use core::panic::PanicInfo;
 use bootloader::{entry_point, BootInfo};
+use spinix::hlt_loop;
+use spinix::drivers::*;
+use spinix;
+use spinix::serial_println;
+use spinix::init;
 
 entry_point!(kernel_main);
 
 
 fn kernel_main(boot_info: &'static mut BootInfo) -> ! {
-    if let Some(framebuffer) = boot_info.framebuffer.as_mut() {
-        let mut value = 0x0;
-        for byte in framebuffer.buffer_mut() {
-            *byte = value;
-            value = value.wrapping_add(1);
-        }
-    }
-    loop {}
-}
-
-/// This function is called on panic.
-#[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
-    loop {}
+    init();
+    serial_println!("Bootloader version: {0}.{1}.{2}", boot_info.version_major, boot_info.version_minor, boot_info.version_patch);
+    x86_64::instructions::interrupts::int3();
+    panic!("test");
+    hlt_loop();
+    loop{}
 }
