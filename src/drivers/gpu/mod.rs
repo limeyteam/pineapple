@@ -1,3 +1,4 @@
 #![no_std]
 #[macro_use]
-pub mod vga;
+pub mod gop;
+pub mod arrays;

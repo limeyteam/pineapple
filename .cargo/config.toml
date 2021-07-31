@@ -1,5 +1,5 @@
 [alias]
-kbuild = """build --target x86_64-spinix.json -Z build-std=core \
+kbuild = """build --target x86_64-spinix.json -Z build-std=core,alloc \
     -Z build-std-features=compiler-builtins-mem"""
 
     

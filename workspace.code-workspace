@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\bootloader"
+		},
+		{
+			"path": "..\\blog_os-post-11"
+		},
+		{
+			"path": "..\\yacuri"
+		}
+	],
+	"settings": {}
+}
