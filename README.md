@@ -1,3 +1,5 @@
+# !!! PROJECT ARCHIVED, Check out [CherryKernel](https://github.com/limeyteam/cherrykernel)
+
 ![Spinix Image](./images/spinix-banner-hq.png)
 
 [![Issues](https://img.shields.io/github/issues/limeyteam/spinix?color=yellow)](https://github.com/limeyteam/spinix/issues) [![License: GPL v3](https://img.shields.io/github/license/limeyteam/spinix?color=green)](https://github.com/limeyteam/spinix/blob/master/LICENSE) [![Star the project!](https://img.shields.io/github/stars/limeyteam/spinix)](https://github.com/limeyteam/spinix/blob/master/LICENSE) 
